@@ -1,16 +1,19 @@
-use base64::encode;
+use base64::{decode, encode};
+use wasm_bindgen::JsValue;
 use yew::prelude::*;
 
 use crate::textarea::Textarea;
 
 pub enum Msg {
     Encode(String),
+    Decode(String),
 }
 
 #[derive(Default, Debug)]
 pub struct App {
-    text: String,
-    output: String,
+    decoded: String,
+    encoded: String,
+    decode_failed: bool,
 }
 
 impl Component for App {
@@ -23,21 +26,40 @@ impl Component for App {
 
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
-            Msg::Encode(text) => {
-                self.text = text.clone();
-                self.output = encode(text.clone().into_bytes());
+            Msg::Encode(decoded) => {
+                self.decoded = decoded.clone();
+                self.encoded = encode(decoded.clone().into_bytes());
                 true
-            }
+            },
+            Msg::Decode(encoded) => {
+                self.encoded = encoded.clone();
+                if let Ok(decoded) = decode(encoded.clone()) {
+                    self.decoded = String::from_utf8(decoded).unwrap();
+                    self.decode_failed = false;
+                } else {
+                    self.decode_failed = true;
+                }
+                true
+            },
         }
     }
 
     fn view(&self, ctx: &Context<Self>) -> Html {
         let link = ctx.link();
-        let on_change = link.callback(Msg::Encode);
+        let encode = link.callback(Msg::Encode);
+        let decode = link.callback(Msg::Decode);
         html! {
-            <div>
-                <Textarea value={self.text.clone()} {on_change} />
-                <textarea value={self.output.clone()} />
+            <div class="main">
+                <h1 class="title">{ "ReCoder" }</h1>
+                <div class="row">
+                    <Textarea value={self.decoded.clone()} on_change={encode} />
+                    if self.decode_failed {
+                        <div class="overlay"><span>{ "Decode Failed. Check your data." }</span></div>
+                    }
+                </div>
+                <div class="row">
+                    <Textarea value={self.encoded.clone()} on_change={decode} />
+                </div>
             </div>
         }
     }
