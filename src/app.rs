@@ -1,18 +1,31 @@
-use base64::{decode, encode};
-use wasm_bindgen::JsValue;
+use web_sys::{HtmlInputElement};
 use yew::prelude::*;
+use crate::encoding_decoding::{decode, encode};
 
 use crate::textarea::Textarea;
 
 pub enum Msg {
-    Encode(String),
-    Decode(String),
+    SetText(String),
+    SetAction(Action),
+}
+
+#[derive(Debug, Eq, PartialEq, Clone)]
+pub enum Action {
+    Encode,
+    Decode,
+}
+
+impl Default for Action {
+    fn default() -> Self {
+        Action::Encode
+    }
 }
 
 #[derive(Default, Debug)]
 pub struct App {
-    decoded: String,
-    encoded: String,
+    action: Action,
+    input: String,
+    output: String,
     decode_failed: bool,
 }
 
@@ -26,39 +39,86 @@ impl Component for App {
 
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
-            Msg::Encode(decoded) => {
-                self.decoded = decoded.clone();
-                self.encoded = encode(decoded.clone().into_bytes());
-                true
+            Msg::SetText(text) => {
+                match &self.action {
+                    Action::Encode => {
+                        self.input = text.clone();
+                    },
+                    Action::Decode => {
+                        self.input = text.clone();
+                    },
+                }
             },
-            Msg::Decode(encoded) => {
-                self.encoded = encoded.clone();
-                if let Ok(decoded) = decode(encoded.clone()) {
-                    self.decoded = String::from_utf8(decoded).unwrap();
+            Msg::SetAction(action) => {
+                self.action = action;
+            },
+        }
+
+        match self.action {
+            Action::Encode => {
+                self.output = encode(self.input.clone());
+                self.decode_failed = false;
+            },
+            Action::Decode => {
+                if let Ok(decoded) = decode(self.input.clone()) {
+                    self.output = decoded;
                     self.decode_failed = false;
                 } else {
                     self.decode_failed = true;
                 }
-                true
             },
         }
+
+        true
     }
 
     fn view(&self, ctx: &Context<Self>) -> Html {
         let link = ctx.link();
-        let encode = link.callback(Msg::Encode);
-        let decode = link.callback(Msg::Decode);
+        let set_text = link.callback(Msg::SetText);
+        let set_encode = link.batch_callback(|e: Event| {
+            let encode_radio = e.target_dyn_into::<HtmlInputElement>();
+            if let Some(encode_radio) = encode_radio {
+                if encode_radio.checked() {
+                    Some(Msg::SetAction(Action::Encode))
+                } else {
+                    None
+                }
+            } else {
+                None
+            }
+        });
+        let set_decode = link.batch_callback(|e: Event| {
+            let decode_radio = e.target_dyn_into::<HtmlInputElement>();
+            if let Some(decode_radio) = decode_radio {
+                if decode_radio.checked() {
+                    Some(Msg::SetAction(Action::Decode))
+                } else {
+                    None
+                }
+            } else {
+                None
+            }
+        });
+
         html! {
             <div class="main">
                 <h1 class="title">{ "ReCoder" }</h1>
                 <div class="row">
-                    <Textarea value={self.decoded.clone()} on_change={encode} />
+                    <label><input type="radio" name="action" checked={self.action == Action::Encode} onchange={set_encode} />{ "Encode" }</label>
+                    <label><input type="radio" name="action" checked={self.action == Action::Decode} onchange={set_decode} />{ "Decode" }</label>
+                </div>
+                <div class="row">
+                    <Textarea value={self.input.clone()} on_change={set_text} />
+                </div>
+                <div class="row">
+                    <div class="controls">
+                    </div>
+                </div>
+                <div class="row">
+                    <textarea class="text" rows="20" value={self.output.clone()} readonly=true />
                     if self.decode_failed {
                         <div class="overlay"><span>{ "Decode Failed. Check your data." }</span></div>
                     }
-                </div>
-                <div class="row">
-                    <Textarea value={self.encoded.clone()} on_change={decode} />
                 </div>
             </div>
         }

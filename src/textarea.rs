@@ -26,6 +26,6 @@ pub fn textarea(props: &Props) -> Html {
     });
 
     html! {
-        <textarea class="text" rows="25" {value} {oninput} />
+        <textarea class="text" rows="20" {value} {oninput} />
     }
 }

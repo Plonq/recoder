@@ -1,5 +1,6 @@
 mod app;
 mod textarea;
+mod encoding_decoding;
 
 use app::App;
 

@@ -21,6 +21,7 @@ body {
   .row {
     width: 100%;
     position: relative;
+    text-align: center;
 
     .overlay {
       position: absolute;
@@ -46,4 +47,17 @@ body {
 .text {
   min-width: 100%;
   width: 100%;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+
+  .left {
+    margin-right: auto;
+  }
+
+  .right {
+    margin-left: auto;
+  }
 }
