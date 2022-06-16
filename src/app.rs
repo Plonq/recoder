@@ -1,5 +1,5 @@
 use crate::encoding_decoding::{decode, encode, Encoding};
-use web_sys::HtmlInputElement;
+use web_sys::{HtmlElement, HtmlInputElement};
 use yew::prelude::*;
 
 use crate::textarea::Textarea;
@@ -7,6 +7,7 @@ use crate::textarea::Textarea;
 pub enum Msg {
     SetText(String),
     SetAction(Action),
+    SetEncoding(Encoding),
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]
@@ -51,6 +52,9 @@ impl Component for App {
             },
             Msg::SetAction(action) => {
                 self.action = action;
+            }
+            Msg::SetEncoding(encoding) => {
+                self.encoding = encoding;
             }
         }
 
@@ -102,6 +106,17 @@ impl Component for App {
             }
         });
 
+        let on_encoding_click = link.batch_callback(|e: MouseEvent| {
+            let encoding_btn = e.target_dyn_into::<HtmlElement>();
+            encoding_btn.map(
+                |btn| match btn.get_attribute("data-value").unwrap().as_str() {
+                    "base64" => Msg::SetEncoding(Encoding::Base64),
+                    "uri" => Msg::SetEncoding(Encoding::Uri),
+                    _ => Msg::SetEncoding(Encoding::Base64),
+                },
+            )
+        });
+
         html! {
             <div class="main">
                 <h1 class="title">{ "ReCoder" }</h1>
@@ -130,6 +145,8 @@ impl Component for App {
                 </div>
                 <div class="row">
                     <div class="controls">
+                        <button type="button" onclick={&on_encoding_click} data-value="base64">{ "Base64" }</button>
+                        <button type="button" onclick={&on_encoding_click} data-value="uri">{ "URI" }</button>
                     </div>
                 </div>
                 <div class="row">
