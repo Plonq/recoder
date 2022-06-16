@@ -1,5 +1,5 @@
 use crate::encoding_decoding::{decode, encode, Encoding};
-use web_sys::{HtmlElement, HtmlInputElement};
+use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use crate::textarea::Textarea;
@@ -92,15 +92,13 @@ impl Component for App {
             })
         });
 
-        let on_encoding_click = link.batch_callback(|e: MouseEvent| {
-            let encoding_btn = e.target_dyn_into::<HtmlElement>();
-            encoding_btn.map(
-                |btn| match btn.get_attribute("data-value").unwrap().as_str() {
-                    "base64" => Msg::SetEncoding(Encoding::Base64),
-                    "uri" => Msg::SetEncoding(Encoding::Uri),
-                    _ => Msg::SetEncoding(Encoding::Base64),
-                },
-            )
+        let on_encoding_click = link.batch_callback(|e: Event| {
+            let encoding_btn = e.target_dyn_into::<HtmlInputElement>();
+            encoding_btn.map(|btn| match btn.value().as_str() {
+                "base64" => Msg::SetEncoding(Encoding::Base64),
+                "uri" => Msg::SetEncoding(Encoding::Uri),
+                _ => Msg::SetEncoding(Encoding::Base64),
+            })
         });
 
         html! {
@@ -133,8 +131,26 @@ impl Component for App {
                 </div>
                 <div class="row">
                     <div class="controls">
-                        <button type="button" onclick={&on_encoding_click} data-value="base64">{ "Base64" }</button>
-                        <button type="button" onclick={&on_encoding_click} data-value="uri">{ "URI" }</button>
+                        <label>
+                            <input
+                                type="radio"
+                                name="encoding"
+                                value="base64"
+                                checked={self.encoding == Encoding::Base64}
+                                onchange={&on_encoding_click}
+                            />
+                            { "Base64" }
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="encoding"
+                                value="uri"
+                                checked={self.encoding == Encoding::Uri}
+                                onchange={&on_encoding_click}
+                            />
+                            { "URI/URL" }
+                        </label>
                     </div>
                 </div>
                 <div class="row">
