@@ -1,6 +1,6 @@
-use web_sys::{HtmlInputElement};
+use crate::encoding_decoding::{decode, encode, Encoding};
+use web_sys::HtmlInputElement;
 use yew::prelude::*;
-use crate::encoding_decoding::{decode, encode};
 
 use crate::textarea::Textarea;
 
@@ -18,17 +18,6 @@ pub enum Action {
 impl Default for Action {
     fn default() -> Self {
         Action::Encode
-    }
-}
-
-#[derive(Debug, Eq, PartialEq)]
-pub enum Encoding {
-    Base64,
-}
-
-impl Default for Encoding {
-    fn default() -> Self {
-        Encoding::Base64
     }
 }
 
@@ -52,43 +41,33 @@ impl Component for App {
 
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
-            Msg::SetText(text) => {
-                match &self.action {
-                    Action::Encode => {
-                        self.input = text.clone();
-                    },
-                    Action::Decode => {
-                        self.input = text.clone();
-                    },
+            Msg::SetText(text) => match &self.action {
+                Action::Encode => {
+                    self.input = text.clone();
+                }
+                Action::Decode => {
+                    self.input = text.clone();
                 }
             },
             Msg::SetAction(action) => {
                 self.action = action;
-            },
+            }
         }
 
         match self.action {
             Action::Encode => {
                 self.output = encode(self.input.clone(), &self.encoding);
                 self.decode_failed = false;
-            },
-            Action::Decode => {
-                match decode(self.input.clone(), &self.encoding) {
-                    Ok(decoded) => {
-                        self.output = decoded;
-                        self.decode_failed = false;
-                    },
-                    Err(e) => {
-                        self.decode_failed = true;
-                        self.error_message = e;
-                    }
+            }
+            Action::Decode => match decode(self.input.clone(), &self.encoding) {
+                Ok(decoded) => {
+                    self.output = decoded;
+                    self.decode_failed = false;
                 }
-                // if let Ok(decoded) = decode(self.input.clone(), &self.encoding) {
-                //     self.output = decoded;
-                //     self.decode_failed = false;
-                // } else {
-                //     self.decode_failed = true;
-                // }
+                Err(e) => {
+                    self.decode_failed = true;
+                    self.error_message = e;
+                }
             },
         }
 
