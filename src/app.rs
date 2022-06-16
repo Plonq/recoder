@@ -104,11 +104,27 @@ impl Component for App {
             <div class="main">
                 <h1 class="title">{ "ReCoder" }</h1>
                 <div class="row">
-                    <label><input type="radio" name="action" checked={self.action == Action::Encode} onchange={set_encode} />{ "Encode" }</label>
-                    <label><input type="radio" name="action" checked={self.action == Action::Decode} onchange={set_decode} />{ "Decode" }</label>
+                    <Textarea value={self.input.clone()} on_change={set_text} />
                 </div>
                 <div class="row">
-                    <Textarea value={self.input.clone()} on_change={set_text} />
+                    <label>
+                        <input
+                            type="radio"
+                            name="action"
+                            checked={self.action == Action::Encode}
+                            onchange={set_encode}
+                        />
+                        { "Encode" }
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="action"
+                            checked={self.action == Action::Decode}
+                            onchange={set_decode}
+                        />
+                        { "Decode" }
+                    </label>
                 </div>
                 <div class="row">
                     <div class="controls">
