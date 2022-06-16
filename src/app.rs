@@ -21,12 +21,25 @@ impl Default for Action {
     }
 }
 
+#[derive(Debug, Eq, PartialEq)]
+pub enum Encoding {
+    Base64,
+}
+
+impl Default for Encoding {
+    fn default() -> Self {
+        Encoding::Base64
+    }
+}
+
 #[derive(Default, Debug)]
 pub struct App {
     action: Action,
     input: String,
     output: String,
     decode_failed: bool,
+    error_message: String,
+    encoding: Encoding,
 }
 
 impl Component for App {
@@ -56,16 +69,26 @@ impl Component for App {
 
         match self.action {
             Action::Encode => {
-                self.output = encode(self.input.clone());
+                self.output = encode(self.input.clone(), &self.encoding);
                 self.decode_failed = false;
             },
             Action::Decode => {
-                if let Ok(decoded) = decode(self.input.clone()) {
-                    self.output = decoded;
-                    self.decode_failed = false;
-                } else {
-                    self.decode_failed = true;
+                match decode(self.input.clone(), &self.encoding) {
+                    Ok(decoded) => {
+                        self.output = decoded;
+                        self.decode_failed = false;
+                    },
+                    Err(e) => {
+                        self.decode_failed = true;
+                        self.error_message = e;
+                    }
                 }
+                // if let Ok(decoded) = decode(self.input.clone(), &self.encoding) {
+                //     self.output = decoded;
+                //     self.decode_failed = false;
+                // } else {
+                //     self.decode_failed = true;
+                // }
             },
         }
 
@@ -133,7 +156,12 @@ impl Component for App {
                 <div class="row">
                     <Textarea value={self.output.clone()} read_only={true} />
                     if self.decode_failed {
-                        <div class="overlay"><span>{ "Decode Failed. Check your data." }</span></div>
+                        <div class="overlay">
+                            <div class="content">
+                                <div><strong>{ "Decode Failed" }</strong></div>
+                                <div><em>{ self.error_message.clone() }</em></div>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>
