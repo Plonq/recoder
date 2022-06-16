@@ -2,10 +2,17 @@ use wasm_bindgen::{JsCast, UnwrapThrowExt};
 use web_sys::{Event, HtmlTextAreaElement, InputEvent};
 use yew::prelude::*;
 
+fn create_default_on_change_callback() -> Callback<String> {
+    Callback::from(|_| ())
+}
+
 #[derive(Clone, PartialEq, Properties)]
 pub struct Props {
     pub value: String,
+    #[prop_or_else(create_default_on_change_callback)]
     pub on_change: Callback<String>,
+    #[prop_or(false)]
+    pub read_only: bool,
 }
 
 fn get_value_from_input_event(e: InputEvent) -> String {
@@ -19,13 +26,13 @@ fn get_value_from_input_event(e: InputEvent) -> String {
 /// Controlled Textarea Component
 #[function_component(Textarea)]
 pub fn textarea(props: &Props) -> Html {
-    let Props { value, on_change } = props.clone();
+    let Props { value, on_change, read_only } = props.clone();
 
     let oninput = Callback::from(move |input_event: InputEvent| {
         on_change.emit(get_value_from_input_event(input_event));
     });
 
     html! {
-        <textarea class="text" rows="20" {value} {oninput} />
+        <textarea class="text" rows="20" readonly={read_only} {value} {oninput} />
     }
 }

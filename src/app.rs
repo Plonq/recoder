@@ -115,7 +115,7 @@ impl Component for App {
                     </div>
                 </div>
                 <div class="row">
-                    <textarea class="text" rows="20" value={self.output.clone()} readonly=true />
+                    <Textarea value={self.output.clone()} read_only={true} />
                     if self.decode_failed {
                         <div class="overlay"><span>{ "Decode Failed. Check your data." }</span></div>
                     }
