@@ -80,30 +80,16 @@ impl Component for App {
 
     fn view(&self, ctx: &Context<Self>) -> Html {
         let link = ctx.link();
+
         let set_text = link.callback(Msg::SetText);
-        let set_encode = link.batch_callback(|e: Event| {
-            let encode_radio = e.target_dyn_into::<HtmlInputElement>();
-            if let Some(encode_radio) = encode_radio {
-                if encode_radio.checked() {
-                    Some(Msg::SetAction(Action::Encode))
-                } else {
-                    None
-                }
-            } else {
-                None
-            }
-        });
-        let set_decode = link.batch_callback(|e: Event| {
-            let decode_radio = e.target_dyn_into::<HtmlInputElement>();
-            if let Some(decode_radio) = decode_radio {
-                if decode_radio.checked() {
-                    Some(Msg::SetAction(Action::Decode))
-                } else {
-                    None
-                }
-            } else {
-                None
-            }
+
+        let on_action_click = link.batch_callback(|e: Event| {
+            let action_el = e.target_dyn_into::<HtmlInputElement>();
+            action_el.map(|btn| match btn.value().as_str() {
+                "encode" => Msg::SetAction(Action::Encode),
+                "decode" => Msg::SetAction(Action::Decode),
+                _ => Msg::SetAction(Action::Encode),
+            })
         });
 
         let on_encoding_click = link.batch_callback(|e: MouseEvent| {
@@ -128,8 +114,9 @@ impl Component for App {
                         <input
                             type="radio"
                             name="action"
+                            value="encode"
                             checked={self.action == Action::Encode}
-                            onchange={set_encode}
+                            onchange={&on_action_click}
                         />
                         { "Encode" }
                     </label>
@@ -137,8 +124,9 @@ impl Component for App {
                         <input
                             type="radio"
                             name="action"
+                            value="decode"
                             checked={self.action == Action::Decode}
-                            onchange={set_decode}
+                            onchange={&on_action_click}
                         />
                         { "Decode" }
                     </label>
