@@ -11,7 +11,15 @@ body {
   font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
 }
 
+body {
+  display: flex;
+  justify-content: center;
+}
+
 .main {
+  flex-basis: 900px;
+  flex-shrink: 1;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,6 +30,7 @@ body {
     width: 100%;
     position: relative;
     text-align: center;
+    flex-shrink: 1;
 
     .overlay {
       position: absolute;
@@ -46,7 +55,6 @@ body {
 }
 
 .text {
-  min-width: 100%;
   width: 100%;
 }
 
