@@ -97,6 +97,7 @@ impl Component for App {
             encoding_btn.map(|btn| match btn.value().as_str() {
                 "base64" => Msg::SetEncoding(Encoding::Base64),
                 "uri" => Msg::SetEncoding(Encoding::Uri),
+                "hex" => Msg::SetEncoding(Encoding::Hex),
                 _ => Msg::SetEncoding(Encoding::Base64),
             })
         });
@@ -150,6 +151,16 @@ impl Component for App {
                                 onchange={&on_encoding_click}
                             />
                             { "URI/URL" }
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="encoding"
+                                value="hex"
+                                checked={self.encoding == Encoding::Hex}
+                                onchange={&on_encoding_click}
+                            />
+                            { "Hex" }
                         </label>
                     </div>
                 </div>
