@@ -1,6 +1,6 @@
 mod app;
 mod components;
-mod encoding;
+mod engine;
 
 use app::App;
 

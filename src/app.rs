@@ -1,8 +1,8 @@
-use crate::encoding::{decode, encode, Encoding};
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use crate::components::Textarea;
+use crate::engine::*;
 
 pub enum Msg {
     SetText(String),
