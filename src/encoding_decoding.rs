@@ -3,6 +3,7 @@ pub fn encode(text: String, encoding: &Encoding) -> String {
         Encoding::Base64 => base64::encode(text.into_bytes()),
         Encoding::Uri => urlencoding::encode(text.as_str()).to_string(),
         Encoding::Hex => hex::encode(text),
+        Encoding::Html => html_escape::encode_text(text.as_str()).to_string(),
     }
 }
 
@@ -20,6 +21,7 @@ pub fn decode(text: String, encoding: &Encoding) -> Result<String, String> {
             Ok(bytes) => String::from_utf8(bytes).map_err(|e| e.to_string()),
             Err(error) => Err(error.to_string()),
         },
+        Encoding::Html => Ok(html_escape::decode_html_entities(text.as_str()).to_string()),
     }
 }
 
@@ -28,6 +30,7 @@ pub enum Encoding {
     Base64,
     Uri,
     Hex,
+    Html,
 }
 
 impl Default for Encoding {
