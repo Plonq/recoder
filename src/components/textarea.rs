@@ -40,6 +40,6 @@ pub fn textarea(props: &Props) -> Html {
     });
 
     html! {
-        <textarea class="textarea" {placeholder} rows="20" readonly={read_only} {value} {oninput} />
+        <textarea class="textarea" {placeholder} readonly={read_only} {value} {oninput} />
     }
 }

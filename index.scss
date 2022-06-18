@@ -11,20 +11,14 @@ body {
   font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
 }
 
-body {
-  display: flex;
-  justify-content: center;
-}
-
 .main {
-  flex-basis: 900px;
-  flex-shrink: 1;
+  max-width: 900px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding: 24px;
+  padding: 24px 24px 48px;
 
   .row {
     width: 100%;
@@ -56,13 +50,18 @@ body {
 
 .textarea {
   width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 324px;
+  max-height: 324px;
   padding: 6px;
+  resize: none;
 
   &::placeholder {
     color: #7e797f;
     font-size: 72px;
     text-align: center;
-    line-height: 307px;
+    line-height: calc(100% * 4);
     vertical-align: middle;
   }
 }
