@@ -78,25 +78,8 @@ header {
 
   .row {
     width: 100%;
-    position: relative;
     text-align: center;
     flex-shrink: 1;
-
-    .overlay {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: hsla(0, 0%, 0%, 0.8);
-      color: white;
-      display: grid;
-
-      > .content {
-        margin: auto;
-        line-height: 1.5em;
-      }
-    }
   }
 }
 
@@ -191,4 +174,28 @@ header {
   .controls {
     margin: 8px 0;
   }
+}
+
+
+// Utils
+
+.overlay-container {
+  position: relative;
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: hsla(0, 0%, 0%, 0.8);
+    color: white;
+    display: grid;
+
+    > .content {
+      margin: auto;
+      line-height: 1.5em;
+    }
+  }
+
 }
