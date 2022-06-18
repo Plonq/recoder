@@ -54,8 +54,17 @@ body {
   font-size: 32px;
 }
 
-.text {
+.textarea {
   width: 100%;
+  padding: 6px;
+
+  &::placeholder {
+    color: #7e797f;
+    font-size: 72px;
+    text-align: center;
+    line-height: 307px;
+    vertical-align: middle;
+  }
 }
 
 .controls {

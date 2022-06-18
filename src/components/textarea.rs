@@ -13,6 +13,8 @@ pub struct Props {
     pub on_change: Callback<String>,
     #[prop_or(false)]
     pub read_only: bool,
+    #[prop_or("Type here".to_string())]
+    pub placeholder: String,
 }
 
 fn get_value_from_input_event(e: InputEvent) -> String {
@@ -26,13 +28,18 @@ fn get_value_from_input_event(e: InputEvent) -> String {
 /// Controlled Textarea Component
 #[function_component(Textarea)]
 pub fn textarea(props: &Props) -> Html {
-    let Props { value, on_change, read_only } = props.clone();
+    let Props {
+        value,
+        on_change,
+        read_only,
+        placeholder,
+    } = props.clone();
 
     let oninput = Callback::from(move |input_event: InputEvent| {
         on_change.emit(get_value_from_input_event(input_event));
     });
 
     html! {
-        <textarea class="text" rows="20" readonly={read_only} {value} {oninput} />
+        <textarea class="textarea" {placeholder} rows="20" readonly={read_only} {value} {oninput} />
     }
 }

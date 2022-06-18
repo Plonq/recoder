@@ -107,7 +107,7 @@ impl Component for App {
             <div class="main">
                 <h1 class="title">{ "ReCoder" }</h1>
                 <div class="row">
-                    <Textarea value={self.input.clone()} on_change={set_text} />
+                    <Textarea placeholder={"Input".to_string()} value={self.input.clone()} on_change={set_text} />
                 </div>
                 <div class="row">
                     <label>
@@ -176,7 +176,7 @@ impl Component for App {
                     </div>
                 </div>
                 <div class="row">
-                    <Textarea value={self.output.clone()} read_only={true} />
+                    <Textarea placeholder={"Output".to_string()} value={self.output.clone()} read_only={true} />
                     if self.decode_failed {
                         <div class="overlay">
                             <div class="content">
