@@ -11,6 +11,19 @@ body {
   font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
 }
 
+header {
+  text-align: center;
+  background-color: #126f59;
+  color: white;
+  padding: 16px;
+  box-shadow: 0 0 8px 3px hsla(0, 0%, 0%, 0.25);
+
+  .title {
+    font-size: 48px;
+    margin: 0;
+  }
+}
+
 .main {
   max-width: 900px;
   margin: 0 auto;
@@ -42,10 +55,6 @@ body {
       }
     }
   }
-}
-
-.title {
-  font-size: 32px;
 }
 
 .textarea {

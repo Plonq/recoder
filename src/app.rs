@@ -1,7 +1,7 @@
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
-use crate::components::Textarea;
+use crate::components::{Header, Textarea};
 use crate::engine::*;
 
 pub enum Msg {
@@ -104,93 +104,95 @@ impl Component for App {
         });
 
         html! {
-            <div class="main">
-                <h1 class="title">{ "ReCoder" }</h1>
-                <div class="row">
-                    <Textarea placeholder={"Input".to_string()} value={self.input.clone()} on_change={set_text} />
-                </div>
-                <div class="row">
-                    <div class="form-radio-group">
-                        <label class="form-radio">
-                            <input
-                                type="radio"
-                                name="action"
-                                value="encode"
-                                checked={self.action == Action::Encode}
-                                onchange={&on_action_click}
-                            />
-                            <span>{ "Encode" }</span>
-                        </label>
-                        <label class="form-radio">
-                            <input
-                                type="radio"
-                                name="action"
-                                value="decode"
-                                checked={self.action == Action::Decode}
-                                onchange={&on_action_click}
-                            />
-                            <span>{ "Decode" }</span>
-                        </label>
+            <>
+                <Header/>
+                <div class="main">
+                    <div class="row">
+                        <Textarea placeholder={"Input".to_string()} value={self.input.clone()} on_change={set_text} />
                     </div>
-                </div>
-                <div class="row">
-                    <div class="controls">
+                    <div class="row">
                         <div class="form-radio-group">
                             <label class="form-radio">
                                 <input
                                     type="radio"
-                                    name="encoding"
-                                    value="base64"
-                                    checked={self.encoding == Encoding::Base64}
-                                    onchange={&on_encoding_click}
+                                    name="action"
+                                    value="encode"
+                                    checked={self.action == Action::Encode}
+                                    onchange={&on_action_click}
                                 />
-                                <span>{ "Base64" }</span>
+                                <span>{ "Encode" }</span>
                             </label>
                             <label class="form-radio">
                                 <input
                                     type="radio"
-                                    name="encoding"
-                                    value="uri"
-                                    checked={self.encoding == Encoding::Uri}
-                                    onchange={&on_encoding_click}
+                                    name="action"
+                                    value="decode"
+                                    checked={self.action == Action::Decode}
+                                    onchange={&on_action_click}
                                 />
-                                <span>{ "URI/URL" }</span>
-                            </label>
-                            <label class="form-radio">
-                                <input
-                                    type="radio"
-                                    name="encoding"
-                                    value="hex"
-                                    checked={self.encoding == Encoding::Hex}
-                                    onchange={&on_encoding_click}
-                                />
-                                <span>{ "Hex" }</span>
-                            </label>
-                            <label class="form-radio">
-                                <input
-                                    type="radio"
-                                    name="encoding"
-                                    value="html"
-                                    checked={self.encoding == Encoding::Html}
-                                    onchange={&on_encoding_click}
-                                />
-                                <span>{ "HTML" }</span>
+                                <span>{ "Decode" }</span>
                             </label>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <Textarea placeholder={"Output".to_string()} value={self.output.clone()} read_only={true} />
-                    if self.decode_failed {
-                        <div class="overlay">
-                            <div class="content">
-                                <div><strong>{ "Decode Failed" }</strong></div>
-                                <div><em>{ self.error_message.clone() }</em></div>
+                    <div class="row">
+                        <div class="controls">
+                            <div class="form-radio-group">
+                                <label class="form-radio">
+                                    <input
+                                        type="radio"
+                                        name="encoding"
+                                        value="base64"
+                                        checked={self.encoding == Encoding::Base64}
+                                        onchange={&on_encoding_click}
+                                    />
+                                    <span>{ "Base64" }</span>
+                                </label>
+                                <label class="form-radio">
+                                    <input
+                                        type="radio"
+                                        name="encoding"
+                                        value="uri"
+                                        checked={self.encoding == Encoding::Uri}
+                                        onchange={&on_encoding_click}
+                                    />
+                                    <span>{ "URI/URL" }</span>
+                                </label>
+                                <label class="form-radio">
+                                    <input
+                                        type="radio"
+                                        name="encoding"
+                                        value="hex"
+                                        checked={self.encoding == Encoding::Hex}
+                                        onchange={&on_encoding_click}
+                                    />
+                                    <span>{ "Hex" }</span>
+                                </label>
+                                <label class="form-radio">
+                                    <input
+                                        type="radio"
+                                        name="encoding"
+                                        value="html"
+                                        checked={self.encoding == Encoding::Html}
+                                        onchange={&on_encoding_click}
+                                    />
+                                    <span>{ "HTML" }</span>
+                                </label>
                             </div>
                         </div>
-                    }
+                    </div>
+                    <div class="row">
+                        <Textarea placeholder={"Output".to_string()} value={self.output.clone()} read_only={true} />
+                        if self.decode_failed {
+                            <div class="overlay">
+                                <div class="content">
+                                    <div><strong>{ "Decode Failed" }</strong></div>
+                                    <div><em>{ self.error_message.clone() }</em></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
-            </div>
+            </>
         }
     }
 }
