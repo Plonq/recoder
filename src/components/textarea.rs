@@ -21,7 +21,6 @@ fn get_value_from_input_event(e: InputEvent) -> String {
     let event: Event = e.dyn_into().unwrap_throw();
     let event_target = event.target().unwrap_throw();
     let target: HtmlTextAreaElement = event_target.dyn_into().unwrap_throw();
-    web_sys::console::log_1(&target.value().into());
     target.value()
 }
 
