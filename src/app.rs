@@ -110,69 +110,73 @@ impl Component for App {
                     <Textarea placeholder={"Input".to_string()} value={self.input.clone()} on_change={set_text} />
                 </div>
                 <div class="row">
-                    <label>
-                        <input
-                            type="radio"
-                            name="action"
-                            value="encode"
-                            checked={self.action == Action::Encode}
-                            onchange={&on_action_click}
-                        />
-                        { "Encode" }
-                    </label>
-                    <label>
-                        <input
-                            type="radio"
-                            name="action"
-                            value="decode"
-                            checked={self.action == Action::Decode}
-                            onchange={&on_action_click}
-                        />
-                        { "Decode" }
-                    </label>
+                    <div class="form-radio-group">
+                        <label class="form-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="encode"
+                                checked={self.action == Action::Encode}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "Encode" }</span>
+                        </label>
+                        <label class="form-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="decode"
+                                checked={self.action == Action::Decode}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "Decode" }</span>
+                        </label>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="controls">
-                        <label>
-                            <input
-                                type="radio"
-                                name="encoding"
-                                value="base64"
-                                checked={self.encoding == Encoding::Base64}
-                                onchange={&on_encoding_click}
-                            />
-                            { "Base64" }
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="encoding"
-                                value="uri"
-                                checked={self.encoding == Encoding::Uri}
-                                onchange={&on_encoding_click}
-                            />
-                            { "URI/URL" }
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="encoding"
-                                value="hex"
-                                checked={self.encoding == Encoding::Hex}
-                                onchange={&on_encoding_click}
-                            />
-                            { "Hex" }
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="encoding"
-                                value="html"
-                                checked={self.encoding == Encoding::Html}
-                                onchange={&on_encoding_click}
-                            />
-                            { "HTML" }
-                        </label>
+                        <div class="form-radio-group">
+                            <label class="form-radio">
+                                <input
+                                    type="radio"
+                                    name="encoding"
+                                    value="base64"
+                                    checked={self.encoding == Encoding::Base64}
+                                    onchange={&on_encoding_click}
+                                />
+                                <span>{ "Base64" }</span>
+                            </label>
+                            <label class="form-radio">
+                                <input
+                                    type="radio"
+                                    name="encoding"
+                                    value="uri"
+                                    checked={self.encoding == Encoding::Uri}
+                                    onchange={&on_encoding_click}
+                                />
+                                <span>{ "URI/URL" }</span>
+                            </label>
+                            <label class="form-radio">
+                                <input
+                                    type="radio"
+                                    name="encoding"
+                                    value="hex"
+                                    checked={self.encoding == Encoding::Hex}
+                                    onchange={&on_encoding_click}
+                                />
+                                <span>{ "Hex" }</span>
+                            </label>
+                            <label class="form-radio">
+                                <input
+                                    type="radio"
+                                    name="encoding"
+                                    value="html"
+                                    checked={self.encoding == Encoding::Html}
+                                    onchange={&on_encoding_click}
+                                />
+                                <span>{ "HTML" }</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
