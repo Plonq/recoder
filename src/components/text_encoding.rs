@@ -29,8 +29,6 @@ pub struct Props {
 pub struct TextEncoding {
     action: Action,
     output: String,
-    decode_failed: bool,
-    error_message: String,
     encoding: Encoding,
 }
 
