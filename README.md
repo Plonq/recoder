@@ -1,6 +1,7 @@
 # ReCoder
 
-A simple web-based 100% client-side tool for text encoding and decoding.
+A simple web-based tool for text encoding and decoding. 100% client-side,
+100% Rust, 0% cruft.
 
 ## Why?
 
