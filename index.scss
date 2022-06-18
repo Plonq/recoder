@@ -1,3 +1,30 @@
+// Reset
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// End reset
+
 * {
   box-sizing: border-box;
 }
@@ -20,8 +47,16 @@ header {
 
   .title {
     font-size: 48px;
+    font-weight: bold;
     margin: 0;
   }
+}
+
+.site-description {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 48px;
+  margin-bottom: 16px;
 }
 
 .main {
