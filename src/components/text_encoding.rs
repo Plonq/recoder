@@ -12,7 +12,6 @@ pub enum Msg {
 pub enum Action {
     Encode,
     Decode,
-    Hash,
 }
 
 impl Default for Action {
@@ -43,43 +42,17 @@ impl Component for TextEncoding {
         Self::default()
     }
 
-    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             Msg::SetAction(action) => {
                 self.action = action;
+                true
             }
             Msg::SetEncoding(encoding) => {
                 self.encoding = encoding;
+                true
             }
         }
-
-        match do_thing(ctx.props().input.clone(), &self.action, &self.encoding) {
-            Ok(output) => {
-                self.output = output;
-                self.decode_failed = false;
-            }
-            Err(error) => {
-                self.decode_failed = true;
-                self.error_message = error;
-            }
-        }
-
-        true
-    }
-
-    fn changed(&mut self, ctx: &Context<Self>) -> bool {
-        match do_thing(ctx.props().input.clone(), &self.action, &self.encoding) {
-            Ok(output) => {
-                self.output = output;
-                self.decode_failed = false;
-            }
-            Err(error) => {
-                self.decode_failed = true;
-                self.error_message = error;
-            }
-        }
-
-        true
     }
 
     fn view(&self, ctx: &Context<Self>) -> Html {
@@ -104,6 +77,25 @@ impl Component for TextEncoding {
                 _ => Msg::SetEncoding(Encoding::Base64),
             })
         });
+
+        let mut output = String::default();
+        let mut decode_failed = false;
+        let mut error_message = String::default();
+
+        match self.action {
+            Action::Encode => {
+                output = encode(ctx.props().input.clone(), &self.encoding);
+            }
+            Action::Decode => match decode(ctx.props().input.clone(), &self.encoding) {
+                Ok(decoded) => {
+                    output = decoded;
+                }
+                Err(e) => {
+                    decode_failed = true;
+                    error_message = e;
+                }
+            },
+        }
 
         html! {
             <div class="text-encoding">
@@ -175,27 +167,16 @@ impl Component for TextEncoding {
                         </label>
                     </div>
                 </div>
-                <Textarea placeholder={"Output".to_string()} value={self.output.clone()} read_only={true} />
-                if self.decode_failed {
+                <Textarea placeholder={"Output".to_string()} value={output} read_only={true} />
+                if decode_failed {
                     <div class="overlay">
                         <div class="content">
                             <div><strong>{ "Decode Failed" }</strong></div>
-                            <div><em>{ self.error_message.clone() }</em></div>
+                            <div><em>{ error_message }</em></div>
                         </div>
                     </div>
                 }
             </div>
         }
-    }
-}
-
-fn do_thing(input: String, action: &Action, encoding: &Encoding) -> Result<String, String> {
-    match action {
-        Action::Encode => Ok(encode(input, encoding)),
-        Action::Decode => match decode(input, encoding) {
-            Ok(decoded) => Ok(decoded),
-            Err(e) => Err(e),
-        },
-        Action::Hash => Ok("Hash lol".to_string()),
     }
 }
