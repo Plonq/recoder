@@ -1,35 +1,30 @@
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
-use crate::components::{Header, Textarea};
+use crate::components::{Header, TextEncoding, Textarea};
 use crate::engine::*;
 
 pub enum Msg {
     SetText(String),
-    SetAction(Action),
-    SetEncoding(Encoding),
+    SetCategory(Category),
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]
-pub enum Action {
-    Encode,
-    Decode,
+pub enum Category {
+    Encoding,
+    Hashing,
 }
 
-impl Default for Action {
+impl Default for Category {
     fn default() -> Self {
-        Action::Encode
+        Category::Encoding
     }
 }
 
 #[derive(Default, Debug)]
 pub struct App {
-    action: Action,
+    category: Category,
     input: String,
-    output: String,
-    decode_failed: bool,
-    error_message: String,
-    encoding: Encoding,
 }
 
 impl Component for App {
@@ -42,40 +37,15 @@ impl Component for App {
 
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
-            Msg::SetText(text) => match &self.action {
-                Action::Encode => {
-                    self.input = text.clone();
-                }
-                Action::Decode => {
-                    self.input = text.clone();
-                }
-            },
-            Msg::SetAction(action) => {
-                self.action = action;
+            Msg::SetText(text) => {
+                self.input = text;
+                true
             }
-            Msg::SetEncoding(encoding) => {
-                self.encoding = encoding;
+            Msg::SetCategory(category) => {
+                self.category = category;
+                true
             }
         }
-
-        match self.action {
-            Action::Encode => {
-                self.output = encode(self.input.clone(), &self.encoding);
-                self.decode_failed = false;
-            }
-            Action::Decode => match decode(self.input.clone(), &self.encoding) {
-                Ok(decoded) => {
-                    self.output = decoded;
-                    self.decode_failed = false;
-                }
-                Err(e) => {
-                    self.decode_failed = true;
-                    self.error_message = e;
-                }
-            },
-        }
-
-        true
     }
 
     fn view(&self, ctx: &Context<Self>) -> Html {
@@ -83,23 +53,12 @@ impl Component for App {
 
         let set_text = link.callback(Msg::SetText);
 
-        let on_action_click = link.batch_callback(|e: Event| {
-            let action_el = e.target_dyn_into::<HtmlInputElement>();
-            action_el.map(|btn| match btn.value().as_str() {
-                "encode" => Msg::SetAction(Action::Encode),
-                "decode" => Msg::SetAction(Action::Decode),
-                _ => Msg::SetAction(Action::Encode),
-            })
-        });
-
-        let on_encoding_click = link.batch_callback(|e: Event| {
-            let encoding_btn = e.target_dyn_into::<HtmlInputElement>();
-            encoding_btn.map(|btn| match btn.value().as_str() {
-                "base64" => Msg::SetEncoding(Encoding::Base64),
-                "uri" => Msg::SetEncoding(Encoding::Uri),
-                "hex" => Msg::SetEncoding(Encoding::Hex),
-                "html" => Msg::SetEncoding(Encoding::Html),
-                _ => Msg::SetEncoding(Encoding::Base64),
+        let on_category_click = link.batch_callback(|e: Event| {
+            let category_el = e.target_dyn_into::<HtmlInputElement>();
+            category_el.map(|btn| match btn.value().as_str() {
+                "encoding" => Msg::SetCategory(Category::Encoding),
+                "hashing" => Msg::SetCategory(Category::Hashing),
+                _ => Msg::SetCategory(Category::Encoding),
             })
         });
 
@@ -115,80 +74,31 @@ impl Component for App {
                             <label class="form-radio">
                                 <input
                                     type="radio"
-                                    name="action"
-                                    value="encode"
-                                    checked={self.action == Action::Encode}
-                                    onchange={&on_action_click}
+                                    name="category"
+                                    value="encoding"
+                                    checked={self.category == Category::Encoding}
+                                    onchange={&on_category_click}
                                 />
-                                <span>{ "Encode" }</span>
+                                <span>{ "Text Encoding" }</span>
                             </label>
                             <label class="form-radio">
                                 <input
                                     type="radio"
-                                    name="action"
-                                    value="decode"
-                                    checked={self.action == Action::Decode}
-                                    onchange={&on_action_click}
+                                    name="category"
+                                    value="hashing"
+                                    checked={self.category == Category::Hashing}
+                                    onchange={&on_category_click}
                                 />
-                                <span>{ "Decode" }</span>
+                                <span>{ "Hashing" }</span>
                             </label>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="controls">
-                            <div class="form-radio-group">
-                                <label class="form-radio">
-                                    <input
-                                        type="radio"
-                                        name="encoding"
-                                        value="base64"
-                                        checked={self.encoding == Encoding::Base64}
-                                        onchange={&on_encoding_click}
-                                    />
-                                    <span>{ "Base64" }</span>
-                                </label>
-                                <label class="form-radio">
-                                    <input
-                                        type="radio"
-                                        name="encoding"
-                                        value="uri"
-                                        checked={self.encoding == Encoding::Uri}
-                                        onchange={&on_encoding_click}
-                                    />
-                                    <span>{ "URI/URL" }</span>
-                                </label>
-                                <label class="form-radio">
-                                    <input
-                                        type="radio"
-                                        name="encoding"
-                                        value="hex"
-                                        checked={self.encoding == Encoding::Hex}
-                                        onchange={&on_encoding_click}
-                                    />
-                                    <span>{ "Hex" }</span>
-                                </label>
-                                <label class="form-radio">
-                                    <input
-                                        type="radio"
-                                        name="encoding"
-                                        value="html"
-                                        checked={self.encoding == Encoding::Html}
-                                        onchange={&on_encoding_click}
-                                    />
-                                    <span>{ "HTML" }</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <Textarea placeholder={"Output".to_string()} value={self.output.clone()} read_only={true} />
-                        if self.decode_failed {
-                            <div class="overlay">
-                                <div class="content">
-                                    <div><strong>{ "Decode Failed" }</strong></div>
-                                    <div><em>{ self.error_message.clone() }</em></div>
-                                </div>
-                            </div>
+                        if self.category == Category::Encoding {
+                            <TextEncoding input={self.input.clone()}/>
+                        }
+                        else if self.category == Category::Hashing {
+                            { "Hashing..." }
                         }
                     </div>
                 </div>
