@@ -88,7 +88,7 @@ impl Component for App {
                                     checked={self.category == Category::Hashing}
                                     onchange={&on_category_click}
                                 />
-                                <span>{ "Hashing" }</span>
+                                <span>{ "Hashing/Crypto" }</span>
                             </label>
                         </div>
                     </div>
