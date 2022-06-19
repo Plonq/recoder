@@ -25,10 +25,9 @@ pub struct Props {
     pub input: String,
 }
 
-#[derive(Default, Debug)]
+#[derive(Default)]
 pub struct TextEncoding {
     action: Action,
-    output: String,
     encoding: Encoding,
 }
 

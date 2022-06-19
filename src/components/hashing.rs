@@ -1,7 +1,5 @@
 use crate::components::{TextInput, Textarea};
-use crate::engine::{
-    decode, encode, hmac_digest_b64, hmac_digest_hex, md5_hash, sha1_hash, sha256_hash,
-};
+use crate::engine::{hmac_digest_b64, hmac_digest_hex, md5_hash, sha1_hash, sha256_hash};
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
@@ -57,10 +55,9 @@ pub struct Props {
     pub input: String,
 }
 
-#[derive(Default, Debug)]
+#[derive(Default)]
 pub struct Hashing {
     action: Action,
-    output: String,
     hmac_config: HmacConfig,
 }
 
@@ -114,9 +111,7 @@ impl Component for Hashing {
             })
         });
 
-        let mut output = String::default();
-        let mut error = false;
-        let mut error_message = String::default();
+        let output;
         let input = ctx.props().input.as_str();
 
         match &self.action {
@@ -205,16 +200,8 @@ impl Component for Hashing {
                         </label>
                     }
                 </div>
-                <div class="overlay-container">
+                <div>
                     <Textarea placeholder={"Output".to_string()} value={output} read_only={true} />
-                    if error {
-                        <div class="overlay">
-                            <div class="content">
-                                <div><strong>{ "Decode Failed" }</strong></div>
-                                <div><em>{ error_message }</em></div>
-                            </div>
-                        </div>
-                    }
                 </div>
             </div>
         }
