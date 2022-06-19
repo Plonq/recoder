@@ -1,5 +1,8 @@
 use crate::components::{TextInput, Textarea};
-use crate::engine::{hmac_digest_b64, hmac_digest_hex, md5_hash, sha1_hash, sha256_hash};
+use crate::engine::{
+    hmac_digest_b64, hmac_digest_hex, md5_hash, sha1_hash, sha224_hash, sha256_hash, sha384_hash,
+    sha512_hash,
+};
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
@@ -13,7 +16,10 @@ pub enum Msg {
 pub enum Action {
     Md5,
     Sha1,
+    Sha224,
     Sha256,
+    Sha384,
+    Sha512,
     Hmac,
 }
 
@@ -94,7 +100,10 @@ impl Component for Hashing {
             action_el.map(|btn| match btn.value().as_str() {
                 "md5" => Msg::SetAction(Action::Md5),
                 "sha1" => Msg::SetAction(Action::Sha1),
+                "sha224" => Msg::SetAction(Action::Sha224),
                 "sha256" => Msg::SetAction(Action::Sha256),
+                "sha384" => Msg::SetAction(Action::Sha384),
+                "sha512" => Msg::SetAction(Action::Sha512),
                 "hmac" => Msg::SetAction(Action::Hmac),
                 _ => Msg::SetAction(Action::default()),
             })
@@ -117,7 +126,10 @@ impl Component for Hashing {
         match &self.action {
             Action::Md5 => output = md5_hash(input),
             Action::Sha1 => output = sha1_hash(input),
+            Action::Sha224 => output = sha224_hash(input),
             Action::Sha256 => output = sha256_hash(input),
+            Action::Sha384 => output = sha384_hash(input),
+            Action::Sha512 => output = sha512_hash(input),
             Action::Hmac => match &self.hmac_config.encoding {
                 HmacEncoding::Hex => {
                     output = hmac_digest_hex(self.hmac_config.key.as_str(), input);
@@ -156,11 +168,41 @@ impl Component for Hashing {
                             <input
                                 type="radio"
                                 name="action"
+                                value="sha224"
+                                checked={self.action == Action::Sha224}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "SHA-224" }</span>
+                        </label>
+                        <label class="form-radio">
+                            <input
+                                type="radio"
+                                name="action"
                                 value="sha256"
                                 checked={self.action == Action::Sha256}
                                 onchange={&on_action_click}
                             />
                             <span>{ "SHA-256" }</span>
+                        </label>
+                        <label class="form-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="sha384"
+                                checked={self.action == Action::Sha384}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "SHA-384" }</span>
+                        </label>
+                        <label class="form-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="sha512"
+                                checked={self.action == Action::Sha512}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "SHA-512" }</span>
                         </label>
                         <label class="form-radio">
                             <input

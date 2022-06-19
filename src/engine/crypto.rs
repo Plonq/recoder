@@ -1,6 +1,6 @@
 use hmac::{Hmac, Mac};
 use sha1::{Digest, Sha1};
-use sha2::Sha256;
+use sha2::{Sha224, Sha256, Sha384, Sha512};
 
 pub fn md5_hash(msg: &str) -> String {
     hex::encode(md5::compute(msg).to_vec())
@@ -12,8 +12,26 @@ pub fn sha1_hash(msg: &str) -> String {
     hex::encode(hasher.finalize().to_vec())
 }
 
+pub fn sha224_hash(msg: &str) -> String {
+    let mut hasher = Sha224::new();
+    hasher.update(msg.as_bytes());
+    hex::encode(hasher.finalize().to_vec())
+}
+
 pub fn sha256_hash(msg: &str) -> String {
     let mut hasher = Sha256::new();
+    hasher.update(msg.as_bytes());
+    hex::encode(hasher.finalize().to_vec())
+}
+
+pub fn sha384_hash(msg: &str) -> String {
+    let mut hasher = Sha384::new();
+    hasher.update(msg.as_bytes());
+    hex::encode(hasher.finalize().to_vec())
+}
+
+pub fn sha512_hash(msg: &str) -> String {
+    let mut hasher = Sha512::new();
     hasher.update(msg.as_bytes());
     hex::encode(hasher.finalize().to_vec())
 }
