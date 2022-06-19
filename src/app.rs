@@ -1,8 +1,7 @@
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
-use crate::components::{Header, TextEncoding, Textarea};
-use crate::engine::*;
+use crate::components::{Hashing, Header, TextEncoding, Textarea};
 
 pub enum Msg {
     SetText(String),
@@ -65,7 +64,7 @@ impl Component for App {
         html! {
             <>
                 <Header/>
-                <div class="main">
+                <main class="main">
                     <div class="row">
                         <Textarea placeholder={"Input".to_string()} value={self.input.clone()} on_change={set_text} />
                     </div>
@@ -98,10 +97,10 @@ impl Component for App {
                             <TextEncoding input={self.input.clone()}/>
                         }
                         else if self.category == Category::Hashing {
-                            { "Hashing..." }
+                            <Hashing input={self.input.clone()}/>
                         }
                     </div>
-                </div>
+                </main>
                 <div class="footer">
                     { "Powered by Rust, WebAssembly, and the Yew framework. " }
                     <a href="https://github.com/Plonq/recoder">{ "GitHub Repo" }</a>
