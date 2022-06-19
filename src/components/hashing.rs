@@ -1,5 +1,7 @@
 use crate::components::{TextInput, Textarea};
-use crate::engine::{decode, encode, hmac_signature_b64, hmac_signature_hex};
+use crate::engine::{
+    decode, encode, hmac_digest_b64, hmac_digest_hex, md5_hash, sha1_hash, sha256_hash,
+};
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
@@ -11,12 +13,15 @@ pub enum Msg {
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum Action {
+    Md5,
+    Sha1,
+    Sha256,
     Hmac,
 }
 
 impl Default for Action {
     fn default() -> Self {
-        Action::Hmac
+        Action::Md5
     }
 }
 
@@ -90,7 +95,10 @@ impl Component for Hashing {
         let on_action_click = link.batch_callback(|e: Event| {
             let action_el = e.target_dyn_into::<HtmlInputElement>();
             action_el.map(|btn| match btn.value().as_str() {
-                "hmac" => Msg::SetAction(Action::default()),
+                "md5" => Msg::SetAction(Action::Md5),
+                "sha1" => Msg::SetAction(Action::Sha1),
+                "sha256" => Msg::SetAction(Action::Sha256),
+                "hmac" => Msg::SetAction(Action::Hmac),
                 _ => Msg::SetAction(Action::default()),
             })
         });
@@ -102,27 +110,25 @@ impl Component for Hashing {
             encoding_btn.map(|btn| match btn.value().as_str() {
                 "hex" => Msg::SetHmacEncoding(HmacEncoding::Hex),
                 "base64" => Msg::SetHmacEncoding(HmacEncoding::Base64),
-                _ => Msg::SetHmacEncoding(HmacEncoding::Hex),
+                _ => Msg::SetHmacEncoding(HmacEncoding::default()),
             })
         });
 
         let mut output = String::default();
         let mut error = false;
         let mut error_message = String::default();
+        let input = ctx.props().input.as_str();
 
         match &self.action {
+            Action::Md5 => output = md5_hash(input),
+            Action::Sha1 => output = sha1_hash(input),
+            Action::Sha256 => output = sha256_hash(input),
             Action::Hmac => match &self.hmac_config.encoding {
                 HmacEncoding::Hex => {
-                    output = hmac_signature_hex(
-                        self.hmac_config.key.as_str(),
-                        ctx.props().input.as_str(),
-                    );
+                    output = hmac_digest_hex(self.hmac_config.key.as_str(), input);
                 }
                 HmacEncoding::Base64 => {
-                    output = hmac_signature_b64(
-                        self.hmac_config.key.as_str(),
-                        ctx.props().input.as_str(),
-                    );
+                    output = hmac_digest_b64(self.hmac_config.key.as_str(), input);
                 }
             },
         }
@@ -131,6 +137,36 @@ impl Component for Hashing {
             <div class="action-component">
                 <div class="control">
                     <div class="form-radio-group">
+                        <label class="form-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="md5"
+                                checked={self.action == Action::Md5}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "MD5" }</span>
+                        </label>
+                        <label class="form-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="sha1"
+                                checked={self.action == Action::Sha1}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "SHA-1" }</span>
+                        </label>
+                        <label class="form-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="sha256"
+                                checked={self.action == Action::Sha256}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "SHA-256" }</span>
+                        </label>
                         <label class="form-radio">
                             <input
                                 type="radio"
