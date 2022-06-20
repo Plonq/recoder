@@ -242,6 +242,10 @@ footer {
   padding: 3px;
   box-shadow: var(--shadow);
 
+  .form-radio:focus-within {
+    outline: 2px solid var(--color-outline);
+  }
+
   &, .form-radio span {
     background-color: var(--color-primary);
     transition: background-color 0.1s ease;
