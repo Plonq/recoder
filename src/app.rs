@@ -68,7 +68,7 @@ impl Component for App {
                     <div class="row">
                         <Textarea placeholder={"Input".to_string()} value={self.input.clone()} on_change={set_text} />
                     </div>
-                    <div class="row">
+                    <div class="row controls">
                         <div class="form-radio-group">
                             <label class="form-radio">
                                 <input
