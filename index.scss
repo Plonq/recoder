@@ -194,7 +194,8 @@ footer {
   }
 
   @media (hover: none) {
-    .output-controls {
+    &:focus .output-controls,
+    &:focus-within .output-controls{
       opacity: 1;
     }
   }
