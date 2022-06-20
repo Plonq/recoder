@@ -35,7 +35,7 @@ body {
   margin: 0;
   width: 100%;
   height: 100%;
-  font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
   background-color: #f3eee6;
 }
 
@@ -93,7 +93,7 @@ header {
   border-radius: 4px;
   padding: 6px;
   resize: none;
-  font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+  font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
 
   &::placeholder {
     color: #7e797f;
