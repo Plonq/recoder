@@ -52,7 +52,7 @@ img {
 @media (prefers-color-scheme: dark) {
   :root {
     --color-primary: hsl(167, 58%, 30%);
-    --color-primary-l: hsl(167, 45%, 42%);
+    --color-primary-l: hsl(167, 45%, 43%);
     --color-primary-d: hsl(165, 73%, 20%);
     --color-body-bg: hsl(30, 3%, 15%);
     --color-body-fg: hsl(0, 0%, 80%);
@@ -61,7 +61,7 @@ img {
     --color-primary-fg: hsl(0, 0%, 100%);
     --color-textarea-bg: hsl(30, 3%, 20%);
     --color-textarea-fg: hsl(0, 0%, 90%);
-    --color-links: var(--color-primary);
+    --color-links: var(--color-primary-l);
   }
 }
 
@@ -98,6 +98,10 @@ header {
     font-weight: bold;
     margin: 0;
   }
+}
+
+footer {
+  background-color: var(--color-body-bg);
 }
 
 .site-description {

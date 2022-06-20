@@ -101,11 +101,11 @@ impl Component for App {
                         }
                     </div>
                 </main>
-                <div class="footer">
+                <footer class="footer">
                     { "Powered by Rust, WebAssembly, and the Yew framework. " }
                     <a href="https://github.com/Plonq/recoder">{ "GitHub Repo" }</a>
                     { "." }
-                </div>
+                </footer>
             </>
         }
     }
