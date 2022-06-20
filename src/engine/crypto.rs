@@ -1,3 +1,4 @@
+use blake2::{Blake2b512, Blake2s256};
 use hmac::{Hmac, Mac};
 use sha1::{Digest, Sha1};
 use sha2::{Sha224, Sha256, Sha384, Sha512};
@@ -32,6 +33,18 @@ pub fn sha384_hash(msg: &str) -> String {
 
 pub fn sha512_hash(msg: &str) -> String {
     let mut hasher = Sha512::new();
+    hasher.update(msg.as_bytes());
+    hex::encode(hasher.finalize().to_vec())
+}
+
+pub fn blake2b512_hash(msg: &str) -> String {
+    let mut hasher = Blake2b512::new();
+    hasher.update(msg.as_bytes());
+    hex::encode(hasher.finalize().to_vec())
+}
+
+pub fn blake2s256_hash(msg: &str) -> String {
+    let mut hasher = Blake2s256::new();
     hasher.update(msg.as_bytes());
     hex::encode(hasher.finalize().to_vec())
 }

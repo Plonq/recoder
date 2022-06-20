@@ -1,7 +1,7 @@
 use crate::components::{TextInput, Textarea};
 use crate::engine::{
-    hmac_digest_b64, hmac_digest_hex, md5_hash, sha1_hash, sha224_hash, sha256_hash, sha384_hash,
-    sha512_hash,
+    blake2b512_hash, blake2s256_hash, hmac_digest_b64, hmac_digest_hex, md5_hash, sha1_hash,
+    sha224_hash, sha256_hash, sha384_hash, sha512_hash,
 };
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
@@ -20,6 +20,8 @@ pub enum Action {
     Sha256,
     Sha384,
     Sha512,
+    Blake2b512,
+    Blake2s256,
     Hmac,
 }
 
@@ -104,6 +106,8 @@ impl Component for Hashing {
                 "sha256" => Msg::SetAction(Action::Sha256),
                 "sha384" => Msg::SetAction(Action::Sha384),
                 "sha512" => Msg::SetAction(Action::Sha512),
+                "blake2b512" => Msg::SetAction(Action::Blake2b512),
+                "blake2s256" => Msg::SetAction(Action::Blake2s256),
                 "hmac" => Msg::SetAction(Action::Hmac),
                 _ => Msg::SetAction(Action::default()),
             })
@@ -130,6 +134,8 @@ impl Component for Hashing {
             Action::Sha256 => output = sha256_hash(input),
             Action::Sha384 => output = sha384_hash(input),
             Action::Sha512 => output = sha512_hash(input),
+            Action::Blake2b512 => output = blake2b512_hash(input),
+            Action::Blake2s256 => output = blake2s256_hash(input),
             Action::Hmac => match &self.hmac_config.encoding {
                 HmacEncoding::Hex => {
                     output = hmac_digest_hex(self.hmac_config.key.as_str(), input);
@@ -203,6 +209,26 @@ impl Component for Hashing {
                                 onchange={&on_action_click}
                             />
                             <span>{ "SHA-512" }</span>
+                        </label>
+                        <label class="form-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="blake2b512"
+                                checked={self.action == Action::Blake2b512}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "BLAKE2b-512" }</span>
+                        </label>
+                        <label class="form-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="blake2s256"
+                                checked={self.action == Action::Blake2s256}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "BLAKE2s-256" }</span>
                         </label>
                         <label class="form-radio">
                             <input
