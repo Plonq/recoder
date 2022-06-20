@@ -195,7 +195,7 @@ footer {
 
   @media (hover: none) {
     &:focus .output-controls,
-    &:focus-within .output-controls{
+    &:focus-within .output-controls {
       opacity: 1;
     }
   }
@@ -347,5 +347,57 @@ footer {
 
   &:active {
     background-color: var(--color-primary-d);
+  }
+}
+
+.custom-radio {
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 0.5em;
+  cursor: pointer;
+
+  input[type=radio] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+    /* For iOS < 15 to remove gradient background */
+    background-color: var(--color-body-bg);
+    /* Not removed via appearance */
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--color-body-fg);
+    box-shadow: inset 0 0 0 1px var(--color-body-fg-muted);
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    cursor: inherit;
+
+    &:before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      opacity: 0;
+      box-shadow: inset 10px 10px 0 1px var(--color-primary);
+    }
+
+    &:checked {
+      box-shadow: inset 0 0 0 1px var(--color-primary);
+
+      &:before {
+        opacity: 1;
+      }
+    }
+
+    &:not(:checked):active:before {
+      opacity: 0.5;
+    }
+  }
+
+  &:hover {
+    input[type=radio] {
+      border-color: var(--color-body-fg-quiet);
+    }
   }
 }

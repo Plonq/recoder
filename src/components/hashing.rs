@@ -220,7 +220,7 @@ impl Component for Hashing {
                     if self.action == Action::Hmac {
                         <TextInput placeholder={"Enter secret key".to_string()} value={self.hmac_config.key.clone()} on_change={on_secret_input} />
                         {"Output as:"}
-                        <label>
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="hmac-encoding"
@@ -230,7 +230,7 @@ impl Component for Hashing {
                             />
                             { "Hex" }
                         </label>
-                        <label>
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="hmac-encoding"
