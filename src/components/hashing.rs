@@ -1,7 +1,8 @@
 use crate::components::{TextInput, Textarea};
 use crate::engine::{
     blake2b512_hash, blake2s256_hash, hmac_digest_b64, hmac_digest_hex, md5_hash, sha1_hash,
-    sha224_hash, sha256_hash, sha384_hash, sha512_hash,
+    sha224_hash, sha256_hash, sha3224_hash, sha3256_hash, sha3384_hash, sha3512_hash, sha384_hash,
+    sha512_hash,
 };
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
@@ -22,6 +23,10 @@ pub enum Action {
     Sha512,
     Blake2b512,
     Blake2s256,
+    Sha3224,
+    Sha3256,
+    Sha3384,
+    Sha3512,
     Hmac,
 }
 
@@ -108,6 +113,10 @@ impl Component for Hashing {
                 "sha512" => Msg::SetAction(Action::Sha512),
                 "blake2b512" => Msg::SetAction(Action::Blake2b512),
                 "blake2s256" => Msg::SetAction(Action::Blake2s256),
+                "sha3224" => Msg::SetAction(Action::Sha3224),
+                "sha3256" => Msg::SetAction(Action::Sha3256),
+                "sha3384" => Msg::SetAction(Action::Sha3384),
+                "sha3512" => Msg::SetAction(Action::Sha3512),
                 "hmac" => Msg::SetAction(Action::Hmac),
                 _ => Msg::SetAction(Action::default()),
             })
@@ -136,6 +145,10 @@ impl Component for Hashing {
             Action::Sha512 => output = sha512_hash(input),
             Action::Blake2b512 => output = blake2b512_hash(input),
             Action::Blake2s256 => output = blake2s256_hash(input),
+            Action::Sha3224 => output = sha3224_hash(input),
+            Action::Sha3256 => output = sha3256_hash(input),
+            Action::Sha3384 => output = sha3384_hash(input),
+            Action::Sha3512 => output = sha3512_hash(input),
             Action::Hmac => match &self.hmac_config.encoding {
                 HmacEncoding::Hex => {
                     output = hmac_digest_hex(self.hmac_config.key.as_str(), input);
@@ -229,6 +242,46 @@ impl Component for Hashing {
                                 onchange={&on_action_click}
                             />
                             <span>{ "BLAKE2s-256" }</span>
+                        </label>
+                        <label class="custom-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="sha3224"
+                                checked={self.action == Action::Sha3224}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "SHA3-224" }</span>
+                        </label>
+                        <label class="custom-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="sha3256"
+                                checked={self.action == Action::Sha3256}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "SHA3-256" }</span>
+                        </label>
+                        <label class="custom-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="sha3384"
+                                checked={self.action == Action::Sha3384}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "SHA3-384" }</span>
+                        </label>
+                        <label class="custom-radio">
+                            <input
+                                type="radio"
+                                name="action"
+                                value="sha3512"
+                                checked={self.action == Action::Sha3512}
+                                onchange={&on_action_click}
+                            />
+                            <span>{ "SHA3-512" }</span>
                         </label>
                         <label class="custom-radio">
                             <input
