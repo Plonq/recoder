@@ -154,7 +154,8 @@ header {
   box-shadow: 0px 8px 15px rgb(0 0 0 / 10%), 0px 3px 5px rgb(0 0 0 / 15%);
 
   &, .form-radio span {
-    background: #27927b;
+    background-color: #27927b;
+    transition: background-color 0.1s ease;
   }
 
   .form-radio:first-child span {
@@ -185,7 +186,7 @@ header {
 
       &:not(:checked) + span {
         &:hover {
-          filter: brightness(1.1);
+          background-color: #42b099;
         }
       }
     }
@@ -237,19 +238,25 @@ header {
 .button-icon {
   border: 0;
   border-radius: 4px;
-  background: none;
+  background-color: #27927b;
+  color: white;
   cursor: pointer;
   padding: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.1s ease;
+  box-shadow: 0px 8px 15px rgb(0 0 0 / 10%), 0px 3px 5px rgb(0 0 0 / 15%);
+
+  * {
+    filter: drop-shadow(0px 2px 3px hsla(0, 0%, 0%, 25%));
+  }
 
   &:hover {
-    background: #dcefe7;
+    background-color: #42b099;
   }
 
   &:active {
-    background: #bcd0c8;
+    background-color: #0e5b48;
   }
 }
