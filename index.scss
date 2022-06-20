@@ -39,10 +39,29 @@ img {
   --color-body-fg-quiet: hsl(0, 0%, 27%);
   --color-body-fg-muted: hsl(0, 0%, 50%);
   --color-primary-fg: hsl(0, 0%, 100%);
+  --color-textarea-bg: hsl(0, 0%, 100%);
+  --color-textarea-fg: hsl(0, 0%, 0%);
+  --color-links: var(--color-primary-d);
 
   --shadow: 0px 8px 15px rgb(0 0 0 / 10%), 0px 3px 5px rgb(0 0 0 / 15%);
   --text-shadow: 0px 2px 3px hsla(0, 0%, 0%, 25%);
   --text-shadow-filter: drop-shadow(0px 2px 3px hsla(0, 0%, 0%, 25%));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: hsl(167, 58%, 30%);
+    --color-primary-l: hsl(167, 45%, 42%);
+    --color-primary-d: hsl(165, 73%, 20%);
+    --color-body-bg: hsl(30, 3%, 15%);
+    --color-body-fg: hsl(0, 0%, 80%);
+    --color-body-fg-quiet: hsl(0, 0%, 65%);
+    --color-body-fg-muted: hsl(0, 0%, 50%);
+    --color-primary-fg: hsl(0, 0%, 100%);
+    --color-textarea-bg: hsl(30, 3%, 20%);
+    --color-textarea-fg: hsl(0, 0%, 90%);
+    --color-links: var(--color-primary);
+  }
 }
 
 // End vars
@@ -59,6 +78,11 @@ body {
   height: 100%;
   font-family: var(--font-family-sans);
   background-color: var(--color-body-bg);
+  color: var(--color-body-fg);
+}
+
+a, a:visited {
+  color: var(--color-links);
 }
 
 header {
@@ -116,6 +140,8 @@ header {
   padding: 6px;
   resize: none;
   font-family: var(--font-family-mono);
+  background-color: var(--color-textarea-bg);
+  color: var(--color-textarea-fg);
 
   &::placeholder {
     color: var(--color-body-fg-muted);
