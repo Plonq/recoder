@@ -149,8 +149,8 @@ impl Component for Hashing {
         html! {
             <div class="action-component">
                 <div class="control">
-                    <div class="form-radio-group">
-                        <label class="form-radio">
+                    <div class="custom-radio-group">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="action"
@@ -160,7 +160,7 @@ impl Component for Hashing {
                             />
                             <span>{ "MD5" }</span>
                         </label>
-                        <label class="form-radio">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="action"
@@ -170,7 +170,7 @@ impl Component for Hashing {
                             />
                             <span>{ "SHA-1" }</span>
                         </label>
-                        <label class="form-radio">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="action"
@@ -180,7 +180,7 @@ impl Component for Hashing {
                             />
                             <span>{ "SHA-224" }</span>
                         </label>
-                        <label class="form-radio">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="action"
@@ -190,7 +190,7 @@ impl Component for Hashing {
                             />
                             <span>{ "SHA-256" }</span>
                         </label>
-                        <label class="form-radio">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="action"
@@ -200,7 +200,7 @@ impl Component for Hashing {
                             />
                             <span>{ "SHA-384" }</span>
                         </label>
-                        <label class="form-radio">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="action"
@@ -210,7 +210,7 @@ impl Component for Hashing {
                             />
                             <span>{ "SHA-512" }</span>
                         </label>
-                        <label class="form-radio">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="action"
@@ -220,7 +220,7 @@ impl Component for Hashing {
                             />
                             <span>{ "BLAKE2b-512" }</span>
                         </label>
-                        <label class="form-radio">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="action"
@@ -230,7 +230,7 @@ impl Component for Hashing {
                             />
                             <span>{ "BLAKE2s-256" }</span>
                         </label>
-                        <label class="form-radio">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="action"

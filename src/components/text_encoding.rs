@@ -121,8 +121,8 @@ impl Component for TextEncoding {
                     </div>
                 </div>
                 <div class="controls">
-                    <div class="form-radio-group">
-                        <label class="form-radio">
+                    <div class="custom-radio-group">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="encoding"
@@ -132,7 +132,7 @@ impl Component for TextEncoding {
                             />
                             <span>{ "Base64" }</span>
                         </label>
-                        <label class="form-radio">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="encoding"
@@ -142,7 +142,7 @@ impl Component for TextEncoding {
                             />
                             <span>{ "URI/URL" }</span>
                         </label>
-                        <label class="form-radio">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="encoding"
@@ -152,7 +152,7 @@ impl Component for TextEncoding {
                             />
                             <span>{ "Hex" }</span>
                         </label>
-                        <label class="form-radio">
+                        <label class="custom-radio">
                             <input
                                 type="radio"
                                 name="encoding"

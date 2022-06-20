@@ -358,6 +358,14 @@ footer {
   }
 }
 
+.custom-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 8px 0;
+}
+
 .custom-radio {
   display: grid;
   grid-template-columns: 1em auto;
