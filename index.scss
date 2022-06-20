@@ -196,6 +196,10 @@ footer {
   border-radius: var(--border-radius);
   background-color: var(--color-textarea-bg);
   color: var(--color-textarea-fg);
+
+  &::placeholder {
+    color: var(--color-body-fg-muted);
+  }
 }
 
 .text-input, .textarea {
