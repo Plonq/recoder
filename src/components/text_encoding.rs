@@ -96,7 +96,7 @@ impl Component for TextEncoding {
 
         html! {
             <div class="action-component">
-                <div class="control">
+                <div class="controls">
                     <div class="form-radio-group">
                         <label class="form-radio">
                             <input
