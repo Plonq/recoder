@@ -25,6 +25,28 @@ img {
 
 // End reset
 
+// Vars
+
+:root {
+  --font-family-sans: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+  --font-family-mono: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+
+  --color-primary: hsl(167, 58%, 36%);
+  --color-primary-l: hsl(167, 45%, 47%);
+  --color-primary-d: hsl(165, 73%, 25%);
+  --color-body-bg: hsl(37, 35%, 93%);
+  --color-body-fg: hsl(0, 0%, 0%);
+  --color-body-fg-quiet: hsl(0, 0%, 27%);
+  --color-body-fg-muted: hsl(0, 0%, 50%);
+  --color-primary-fg: hsl(0, 0%, 100%);
+
+  --shadow: 0px 8px 15px rgb(0 0 0 / 10%), 0px 3px 5px rgb(0 0 0 / 15%);
+  --text-shadow: 0px 2px 3px hsla(0, 0%, 0%, 25%);
+  --text-shadow-filter: drop-shadow(0px 2px 3px hsla(0, 0%, 0%, 25%));
+}
+
+// End vars
+
 * {
   box-sizing: border-box;
 }
@@ -35,14 +57,14 @@ body {
   margin: 0;
   width: 100%;
   height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
-  background-color: #f3eee6;
+  font-family: var(--font-family-sans);
+  background-color: var(--color-body-bg);
 }
 
 header {
   text-align: center;
-  background-color: #126f59;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-primary-fg);
   padding: 16px;
   box-shadow: 0 0 8px 3px hsla(0, 0%, 0%, 0.25);
 
@@ -64,7 +86,7 @@ header {
   text-align: center;
   font-size: 14px;
   font-style: italic;
-  color: #464646;
+  color: var(--color-body-fg-quiet);
   padding: 12px;
 }
 
@@ -93,10 +115,10 @@ header {
   border-radius: 4px;
   padding: 6px;
   resize: none;
-  font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+  font-family: var(--font-family-mono);
 
   &::placeholder {
-    color: #7e797f;
+    color: var(--color-body-fg-muted);
     font-size: 72px;
     text-align: center;
     line-height: calc(100% * 4);
@@ -151,10 +173,10 @@ header {
   display: inline-block;
   border-radius: 4px;
   padding: 3px;
-  box-shadow: 0px 8px 15px rgb(0 0 0 / 10%), 0px 3px 5px rgb(0 0 0 / 15%);
+  box-shadow: var(--shadow);
 
   &, .form-radio span {
-    background-color: #27927b;
+    background-color: var(--color-primary);
     transition: background-color 0.1s ease;
   }
 
@@ -170,7 +192,6 @@ header {
 
   .form-radio {
     &:active span {
-      background-color: #0e5b48;
       box-shadow: inset 1px 1px 5px hsla(0, 0%, 0%, 0.3)
     }
 
@@ -180,24 +201,24 @@ header {
       width: 0;
 
       &:checked + span {
-        background-color: #126f59;
+        background-color: var(--color-primary-d);
         box-shadow: inset 1px 1px 4px hsla(0, 0%, 0%, 0.25)
       }
 
       &:not(:checked) + span {
         &:hover {
-          background-color: #42b099;
+          background-color: var(--color-primary-l);
         }
       }
     }
 
     span {
-      color: white;
+      color: var(--color-primary-fg);
       padding: 8px 12px;
       display: inline-block;
       cursor: pointer;
       border-radius: 1px;
-      text-shadow: 0px 2px 3px hsla(0, 0%, 0%, 25%);
+      text-shadow: var(--text-shadow);
     }
   }
 }
@@ -238,7 +259,7 @@ header {
 .button-icon {
   border: 0;
   border-radius: 4px;
-  background-color: #27927b;
+  background-color: var(--color-primary);
   color: white;
   cursor: pointer;
   padding: 6px;
@@ -246,17 +267,17 @@ header {
   align-items: center;
   justify-content: center;
   transition: background-color 0.1s ease;
-  box-shadow: 0px 8px 15px rgb(0 0 0 / 10%), 0px 3px 5px rgb(0 0 0 / 15%);
+  box-shadow: var(--shadow);
 
   * {
-    filter: drop-shadow(0px 2px 3px hsla(0, 0%, 0%, 25%));
+    filter: var(--text-shadow-filter);
   }
 
   &:hover {
-    background-color: #42b099;
+    background-color: var(--color-primary-l);
   }
 
   &:active {
-    background-color: #0e5b48;
+    background-color: var(--color-primary-d);
   }
 }
