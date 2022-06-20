@@ -164,6 +164,16 @@ footer {
     line-height: calc(100% * 4);
     vertical-align: middle;
   }
+
+  @media screen and (max-width: 500px) {
+    min-height: 224px;
+    max-height: 224px;
+
+    &::placeholder {
+      font-size: 52px;
+      line-height: calc(100% * 4);
+    }
+  }
 }
 
 .textarea-container {
