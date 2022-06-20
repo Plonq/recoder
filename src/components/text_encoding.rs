@@ -165,7 +165,7 @@ impl Component for TextEncoding {
                     </div>
                 </div>
                 <div class="overlay-container">
-                    <Textarea placeholder={"Output".to_string()} value={output} read_only={true} />
+                    <Textarea placeholder={"Output".to_string()} value={output} read_only={true} is_output={true} />
                     if decode_failed {
                         <div class="overlay">
                             <div class="content">

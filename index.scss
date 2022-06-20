@@ -90,6 +90,7 @@ header {
   min-width: 100%;
   min-height: 324px;
   max-height: 324px;
+  border-radius: 4px;
   padding: 6px;
   resize: none;
   font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
@@ -100,6 +101,30 @@ header {
     text-align: center;
     line-height: calc(100% * 4);
     vertical-align: middle;
+  }
+}
+
+.textarea-container {
+  position: relative;
+
+  .output-controls {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+
+  &:hover {
+    .output-controls {
+      opacity: 1;
+    }
+  }
+
+  @media (hover: none) {
+    .output-controls {
+      opacity: 1;
+    }
   }
 }
 
@@ -206,4 +231,25 @@ header {
     }
   }
 
+}
+
+
+.button-icon {
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: #dcefe7;
+  }
+
+  &:active {
+    background: #bcd0c8;
+  }
 }

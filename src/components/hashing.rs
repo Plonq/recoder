@@ -243,7 +243,7 @@ impl Component for Hashing {
                     }
                 </div>
                 <div>
-                    <Textarea placeholder={"Output".to_string()} value={output} read_only={true} />
+                    <Textarea placeholder={"Output".to_string()} value={output} read_only={true} is_output={true} />
                 </div>
             </div>
         }
