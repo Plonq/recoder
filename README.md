@@ -34,7 +34,7 @@ trunk serve
 Use Trunk to build for production:
 
 ```bash
-trunk build
+trunk build --release
 ```
 
 Output will be in the `dist` directory, which can be statically hosted
