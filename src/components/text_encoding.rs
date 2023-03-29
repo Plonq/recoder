@@ -8,16 +8,11 @@ pub enum Msg {
     SetEncoding(Encoding),
 }
 
-#[derive(Debug, Eq, PartialEq, Clone)]
+#[derive(Debug, Eq, PartialEq, Clone, Default)]
 pub enum Action {
+    #[default]
     Encode,
     Decode,
-}
-
-impl Default for Action {
-    fn default() -> Self {
-        Action::Encode
-    }
 }
 
 #[derive(Clone, PartialEq, Properties)]

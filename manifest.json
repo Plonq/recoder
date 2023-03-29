@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "Recoder",
+  "short_name": "Recoder",
+  "description": "A simple tool for text encoding, decoding, and hashing. 100% client-side.",
+  "display": "standalone",
+  "background_color": "#fff",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "assets/icon-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ]
+}

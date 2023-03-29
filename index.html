@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="A simple tool for text encoding, decoding, and hashing. 100% client-side." />
-    <meta name="keywords" content="text string encode encoder encoding decode decoder decoding hash hashing sha1 md5 sha-256 hmac url uri base64 hex" />
-    <title>ReCoder</title>
-    <link data-trunk rel="sass" href="index.scss" />
-  </head>
+<head>
+  <meta charset="utf-8"/>
+  <title>ReCoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="A simple tool for text encoding, decoding, and hashing. 100% client-side."/>
+  <meta name="keywords"
+        content="text string encode encoder encoding decode decoder decoding hash hashing sha1 md5 sha-256 hmac url uri base64 hex"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="shortcut icon" type="image/png" href="assets/favicon.png"/>
+
+  <!-- Trunk -->
+  <link data-trunk rel="sass" href="index.scss"/>
+  <link data-trunk rel="copy-dir" href="assets"/>
+  <link data-trunk rel="copy-file" href="service-worker.js"/>
+  <link data-trunk rel="copy-file" href="manifest.json"/>
+
+  <script>
+    // register ServiceWorker
+    window.onload = () => {
+      'use strict';
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('/service-worker.js');
+      }
+    }
+  </script>
+</head>
 </html>

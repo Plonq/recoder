@@ -6,7 +6,8 @@ pub fn header() -> Html {
     html! {
         <>
             <header>
-                <h1 class="title">{ "ReCoder" }</h1>
+                <h1 class="sr-only">{ "ReCoder" }</h1>
+                <img src="assets/recoder-logo.png" />
             </header>
             <p class="site-description">
                 { "A simple tool for text encoding, decoding, and hashing. 100% client-side." }

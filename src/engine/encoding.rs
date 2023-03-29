@@ -25,16 +25,11 @@ pub fn decode(text: String, encoding: &Encoding) -> Result<String, String> {
     }
 }
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Eq, PartialEq, Default)]
 pub enum Encoding {
+    #[default]
     Base64,
     Uri,
     Hex,
     Html,
-}
-
-impl Default for Encoding {
-    fn default() -> Self {
-        Encoding::Base64
-    }
 }
