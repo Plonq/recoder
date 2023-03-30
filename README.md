@@ -3,6 +3,10 @@
 A simple web-based tool for text encoding, decoding, and hashing. 100% client-side,
 100% Rust, 0% cruft.
 
+# Demo
+
+https://recoder.plonq.org
+
 ## Why?
 
 Sometimes I need to encode or decode text as a one-off. There are
